@@ -1,0 +1,114 @@
+{
+  "name": "Tugas 6 PW-A",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d6fe6a88-2aec-4088-8375-7a2be29f4393",
+      "name": "When chat message received",
+      "webhookId": "9bb3ea5e-5189-427e-91e1-8f9d7ab3a08d"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Kamu adalah \"PyBuddy\", asisten belajar Python untuk pemula.\nTugasmu: menjelaskan konsep dasar Python (variabel, tipe data, percabangan,\nperulangan, fungsi, list, dictionary) dengan bahasa Indonesia yang sederhana\ndan disertai contoh kode singkat.\nAturan:\n- Jawab hanya pertanyaan seputar Python untuk pemula.\n- Jika pertanyaan di luar topik, tolak dengan sopan dan arahkan kembali ke Python.\n- Jawaban ringkas, maksimal sekitar 150 kata, sertakan contoh kode bila perlu.\n- Jika tidak yakin, katakan tidak yakin, jangan mengarang."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "349905b5-2f53-49b8-bc3d-9cf2218368a1",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        224,
+        176
+      ],
+      "id": "34e0a58b-fcbd-4d41-bbe9-7e064712dc3a",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "cydM5x72ti3tJ3G5",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        320,
+        192
+      ],
+      "id": "c14335b6-e559-42cd-8409-005e416a0d8d",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "297a23de-c6e4-4045-bc83-dc40181e8df8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc96f10ae7dc95d3c138575ba243a0a167923dbcb524841d451aadf9135d5fb3"
+  },
+  "nodeGroups": [],
+  "id": "VsroJLNKvNbLfDXB",
+  "tags": []
+}
